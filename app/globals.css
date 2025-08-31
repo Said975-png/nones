@@ -2948,6 +2948,16 @@ body {
 }
 
 
+/* Pricing badge mobile overrides */
+@media (max-width: 768px) {
+  .pricing-badge { top: 10px; padding: 0.4rem 1rem; font-size: 0.8rem; }
+  .pricing-card-header { padding-top: 3rem; }
+}
+@media (max-width: 480px) {
+  .pricing-badge { top: 8px; padding: 0.35rem 0.9rem; font-size: 0.75rem; }
+  .pricing-card-header { padding-top: 3.25rem; }
+}
+
 /* Jarvis Chat Styles */
 .chat-button-container {
   position: fixed;
@@ -3661,7 +3671,7 @@ body {
   }
 
   .chat-overlay {
-    /* Фиксируем высоту для предотвращения скачков */
+    /* Фиксируем высоту для предотвращения скачк��в */
     height: 100vh;
     height: 100dvh; /* Динамическая высота viewport для мобильных */
   }
@@ -3700,7 +3710,7 @@ body {
     padding: 1rem;
     padding-bottom: 6rem; /* Отступ для фиксированного поля ввода */
     gap: 0.875rem;
-    /* Обеспечиваем правильное заполнение оставше��ося пространства */
+    /* Обеспечиваем правильное заполнение оставшегося пространства */
     flex: 1;
     min-height: 0;
     /* Всегда прокручиваем к низу при изменении размера */
