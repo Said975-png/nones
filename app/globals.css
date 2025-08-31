@@ -2572,7 +2572,7 @@ body {
 
 .pricing-badge {
   position: absolute;
-  top: -12px;
+  top: 12px;
   left: 50%;
   transform: translateX(-50%);
   background: linear-gradient(135deg, #0ea5e9, #3b82f6);
@@ -2585,6 +2585,7 @@ body {
   align-items: center;
   gap: 0.5rem;
   box-shadow: 0 4px 20px rgba(14, 165, 233, 0.4);
+  z-index: 2;
 }
 
 .badge-star {
@@ -2595,6 +2596,7 @@ body {
 .pricing-card-header {
   text-align: center;
   margin-bottom: 2rem;
+  padding-top: 3rem;
 }
 
 .plan-name {
@@ -2637,10 +2639,47 @@ body {
   white-space: nowrap;
 }
 
+
+
+
+
+
+
 .plan-description {
   color: rgba(255, 255, 255, 0.8);
   font-size: 1rem;
   line-height: 1.5;
+}
+
+/* Pricing sale styles (scoped) */
+.plan-price.sale {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+}
+.price-original {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.6);
+}
+.original-amount {
+  font-size: 1.25rem;
+  font-weight: 700;
+  text-decoration: line-through;
+  color: rgba(255, 255, 255, 0.6);
+  line-height: 1;
+}
+.price-original .price-currency {
+  color: rgba(255, 255, 255, 0.5);
+  margin-left: 0.25rem;
+}
+.price-current { display: flex; align-items: baseline; justify-content: center; }
+
+@media (max-width: 480px) {
+  .plan-price.sale { gap: 0.2rem; }
+  .original-amount { font-size: 1.1rem; }
 }
 
 .pricing-card-body {
@@ -2908,6 +2947,17 @@ body {
     padding: 0.875rem 1.5rem;
     font-size: 0.95rem;
   }
+}
+
+
+/* Pricing badge mobile overrides */
+@media (max-width: 768px) {
+  .pricing-badge { top: 10px; padding: 0.4rem 1rem; font-size: 0.8rem; }
+  .pricing-card-header { padding-top: 3rem; }
+}
+@media (max-width: 480px) {
+  .pricing-badge { top: 8px; padding: 0.35rem 0.9rem; font-size: 0.75rem; }
+  .pricing-card-header { padding-top: 3.25rem; }
 }
 
 /* Jarvis Chat Styles */
@@ -3701,7 +3751,7 @@ body {
     padding: 0.875rem 1rem;
     /* Добавляем безопасную зону для мобильных устройств */
     padding-bottom: max(0.875rem, env(safe-area-inset-bottom));
-    /* Фиксируем панель ввода внизу экрана */
+    /* Фиксируем панель вво��а внизу экрана */
     position: fixed;
     bottom: 0;
     left: 0;
