@@ -2637,6 +2637,38 @@ body {
   white-space: nowrap;
 }
 
+.plan-price.sale {
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.price-original {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.original-amount {
+  font-size: 1.25rem;
+  font-weight: 700;
+  text-decoration: line-through;
+  color: rgba(255, 255, 255, 0.6);
+  line-height: 1;
+}
+
+.price-original .price-currency {
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: 600;
+  margin-left: 0.25rem;
+}
+
+.price-current {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+}
+
 .plan-description {
   color: rgba(255, 255, 255, 0.8);
   font-size: 1rem;
