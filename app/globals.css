@@ -2649,6 +2649,37 @@ body {
   line-height: 1.5;
 }
 
+/* Pricing sale styles (scoped) */
+.plan-price.sale {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+}
+.price-original {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.6);
+}
+.original-amount {
+  font-size: 1.25rem;
+  font-weight: 700;
+  text-decoration: line-through;
+  color: rgba(255, 255, 255, 0.6);
+  line-height: 1;
+}
+.price-original .price-currency {
+  color: rgba(255, 255, 255, 0.5);
+  margin-left: 0.25rem;
+}
+.price-current { display: flex; align-items: baseline; justify-content: center; }
+
+@media (max-width: 480px) {
+  .plan-price.sale { gap: 0.2rem; }
+  .original-amount { font-size: 1.1rem; }
+}
+
 .pricing-card-body {
   flex: 1;
   margin-bottom: 2rem;
@@ -3669,7 +3700,7 @@ body {
     padding: 1rem;
     padding-bottom: 6rem; /* Отступ для фиксированного поля ввода */
     gap: 0.875rem;
-    /* Обеспечиваем правильное заполнение оставшегося пространства */
+    /* Обеспечиваем правильное заполнение оставше��ося пространства */
     flex: 1;
     min-height: 0;
     /* Всегда прокручиваем к низу при изменении размера */
