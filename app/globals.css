@@ -2572,7 +2572,7 @@ body {
 
 .pricing-badge {
   position: absolute;
-  top: 12px;
+  top: -12px;
   left: 50%;
   transform: translateX(-50%);
   background: linear-gradient(135deg, #0ea5e9, #3b82f6);
@@ -2585,9 +2585,6 @@ body {
   align-items: center;
   gap: 0.5rem;
   box-shadow: 0 4px 20px rgba(14, 165, 233, 0.4);
-  z-index: 2;
-  line-height: 1;
-  pointer-events: none;
 }
 
 .badge-star {
@@ -2598,7 +2595,6 @@ body {
 .pricing-card-header {
   text-align: center;
   margin-bottom: 2rem;
-  padding-top: 1.5rem;
 }
 
 .plan-name {
@@ -2641,45 +2637,11 @@ body {
   white-space: nowrap;
 }
 
-.plan-price.sale {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  gap: 0.25rem;
-}
 
-.price-original {
-  display: flex;
-  align-items: baseline;
-  justify-content: center;
-  color: rgba(255, 255, 255, 0.6);
-}
 
-.plan-price.sale .price-currency {
-  margin-left: 0.25rem;
-}
 
-.original-amount {
-  font-size: 1.25rem;
-  font-weight: 700;
-  text-decoration: line-through;
-  color: rgba(255, 255, 255, 0.6);
-  line-height: 1;
-}
 
-.price-original .price-currency {
-  color: rgba(255, 255, 255, 0.5);
-  font-weight: 600;
-  margin-left: 0.25rem;
-}
 
-.price-current {
-  display: flex;
-  align-items: baseline;
-  justify-content: center;
-}
 
 .plan-description {
   color: rgba(255, 255, 255, 0.8);
@@ -2954,31 +2916,6 @@ body {
   }
 }
 
-/* Pricing mobile badge spacing overrides */
-@media (max-width: 768px) {
-  .pricing-badge {
-    top: 10px;
-    padding: 0.4rem 1rem;
-    font-size: 0.8rem;
-  }
-  .pricing-card-header {
-    padding-top: 3rem;
-  }
-  .plan-price.sale { gap: 0.2rem; }
-}
-
-@media (max-width: 480px) {
-  .pricing-badge {
-    top: 6px;
-    padding: 0.3rem 0.85rem;
-    font-size: 0.75rem;
-  }
-  .pricing-card-header {
-    padding-top: 3.5rem;
-  }
-  .original-amount { font-size: 1.1rem; }
-  .plan-price.sale { gap: 0.15rem; }
-}
 
 /* Jarvis Chat Styles */
 .chat-button-container {
