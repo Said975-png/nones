@@ -16,8 +16,8 @@ function keepMessagesSimple(messages: Message[]): Message[] {
   return [...messages];
 }
 
-// Get random API key for load balancing
-function getRandomOpenRouterKey(): string {
+// Get list of OpenRouter keys (supports rotation)
+function getOpenRouterKeys(): string[] {
   const keys = [
     process.env.OPENROUTER_API_KEY_1,
     process.env.OPENROUTER_API_KEY_2,
@@ -27,13 +27,9 @@ function getRandomOpenRouterKey(): string {
     process.env.OPENROUTER_API_KEY_6,
     process.env.OPENROUTER_API_KEY_7,
     process.env.OPENROUTER_API_KEY_8,
-  ].filter(Boolean);
-  
-  if (keys.length === 0) {
-    throw new Error('No OpenRouter API keys available');
-  }
-  
-  return keys[Math.floor(Math.random() * keys.length)] as string;
+  ].filter((k): k is string => Boolean(k));
+  if (keys.length === 0) throw new Error('No OpenRouter API keys available');
+  return keys;
 }
 
 // Call Groq API (fastest, most powerful free model)
@@ -68,35 +64,48 @@ async function callGroq(messages: Message[], stream = false): Promise<Response> 
   return response;
 }
 
-// Call OpenRouter API (fallback with multiple free models)
+// Call OpenRouter API with key rotation (fallback with free models)
 async function callOpenRouter(messages: Message[], stream = false): Promise<Response> {
-  const apiKey = getRandomOpenRouterKey();
-  
-  const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
-    method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${apiKey}`,
-      'Content-Type': 'application/json',
-      'HTTP-Referer': process.env.NEXTAUTH_URL || 'http://localhost:3000',
-      'X-Title': 'AI Assistant',
-    },
-    body: JSON.stringify({
-      model: process.env.FALLBACK_MODEL || 'meta-llama/llama-3.2-3b-instruct:free',
-      messages,
-      stream,
-      max_tokens: parseInt(process.env.AI_MAX_TOKENS || '4000'),
-      temperature: parseFloat(process.env.AI_TEMPERATURE || '0.3'),
-      top_p: parseFloat(process.env.AI_TOP_P || '0.9'),
-      frequency_penalty: 0.1,
-      presence_penalty: 0.1,
-    }),
-  });
+  const keys = getOpenRouterKeys();
+  let lastError: unknown = null;
 
-  if (!response.ok) {
-    throw new Error(`OpenRouter API error: ${response.status} ${response.statusText}`);
+  for (const apiKey of keys) {
+    try {
+      const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${apiKey}`,
+          'Content-Type': 'application/json',
+          'HTTP-Referer': process.env.NEXTAUTH_URL || 'http://localhost:3000',
+          'X-Title': 'AI Assistant',
+        },
+        body: JSON.stringify({
+          model: process.env.FALLBACK_MODEL || 'google/gemma-2-9b-it:free',
+          messages,
+          stream,
+          max_tokens: parseInt(process.env.AI_MAX_TOKENS || '4000'),
+          temperature: parseFloat(process.env.AI_TEMPERATURE || '0.3'),
+          top_p: parseFloat(process.env.AI_TOP_P || '0.9'),
+          frequency_penalty: 0.1,
+          presence_penalty: 0.1,
+        }),
+      });
+
+      if (response.ok) return response;
+
+      if ([401, 402, 403, 429, 500, 502, 503, 504].includes(response.status)) {
+        lastError = new Error(`OpenRouter key failed with status ${response.status}`);
+        continue;
+      }
+
+      throw new Error(`OpenRouter API error: ${response.status} ${response.statusText}`);
+    } catch (err) {
+      lastError = err;
+      continue;
+    }
   }
 
-  return response;
+  throw lastError instanceof Error ? lastError : new Error('All OpenRouter keys failed');
 }
 
 // Main chat function with smart provider selection and fallbacks
@@ -152,7 +161,7 @@ export async function POST(request: NextRequest) {
 
 КОМПАНИЯ JARVIS:
 - Создаем современные сайты с ИИ-ассистентами
-- Превращаем обычные интернет-магазины в умные, клиентоориентированные платформы
+- П��евращаем обычные интернет-магазины в умные, клиентоориентированные платформы
 - Увеличиваем продажи с автоматической поддержкой, персонализированными рекомендациями и умными взаимодействиями
 
 НАШИ ТАРИФЫ И ТОЧНЫЕ ЦЕНЫ:
@@ -179,7 +188,7 @@ export async function POST(request: NextRequest) {
    - ДЖАРВИС ИИ полная версия
    - Индивидуальные решения
    - VIP поддержка 24 часа в сутки
-   - Максимум возможностей для крупного бизнеса
+   - Мак��имум возможностей для крупного бизнеса
 
 ПРЕИМУЩЕСТВА НАШЕГО ИИ:
 - ИИ-интеллект: Продвинутые алгоритмы машинного обучения для персонализированного опыта каждого посетителя
@@ -226,7 +235,7 @@ export async function POST(request: NextRequest) {
 - Предлагай связаться для консультации через support@jarvis.uz
 
 ТВОЯ ЛИЧНОСТЬ:
-- Ты девушка-консультант Джарвис, дружелюбная и профессиональная
+- Ты девушка-консультант Джарвис, дружелюбная �� профессиональная
 - Говоришь от женского лица (я помогу, я расскажу, я покажу)
 - Профессиональная консультантка, знающая все детали
 - Эксперт в области ИИ для интернет-торговли
