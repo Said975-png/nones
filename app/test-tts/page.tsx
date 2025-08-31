@@ -48,7 +48,17 @@ export default function TestTTSPage() {
         URL.revokeObjectURL(audioUrl)
       }
       
-      await audio.play()
+      const playPromise = audio.play()
+      if (playPromise !== undefined) {
+        playPromise.catch((err) => {
+          const msg = String(err || '')
+          if (msg.includes('interrupted by a call to pause()') || (err && (err as any).name === 'AbortError')) {
+            return
+          }
+          console.error('TTS play error:', err)
+        })
+        try { await playPromise } catch (_) {}
+      }
       
     } catch (err) {
       console.error('TTS test error:', err)
