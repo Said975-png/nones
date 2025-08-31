@@ -9,7 +9,7 @@
 html {
   scroll-behavior: smooth;
   overflow-x: visible;
-  /* Предотвращаем зум на мобильных устройства�� */
+  /* Предотвращаем зум на мобильных устройствах */
   -webkit-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%;
   text-size-adjust: 100%;
@@ -2952,6 +2952,29 @@ body {
   }
 }
 
+/* Pricing mobile badge spacing overrides */
+@media (max-width: 768px) {
+  .pricing-badge {
+    top: 10px;
+    padding: 0.4rem 1rem;
+    font-size: 0.8rem;
+  }
+  .pricing-card-header {
+    padding-top: 2.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .pricing-badge {
+    top: 8px;
+    padding: 0.35rem 0.9rem;
+    font-size: 0.75rem;
+  }
+  .pricing-card-header {
+    padding-top: 3rem;
+  }
+}
+
 /* Jarvis Chat Styles */
 .chat-button-container {
   position: fixed;
@@ -3704,7 +3727,7 @@ body {
     padding: 1rem;
     padding-bottom: 6rem; /* Отступ для фиксированного поля ввода */
     gap: 0.875rem;
-    /* Обеспечиваем правильное ��аполнение оставшегося пространства */
+    /* Обеспечиваем правильное заполнение оставшегося пространства */
     flex: 1;
     min-height: 0;
     /* Всегда прокручиваем к низу при изменении размера */
