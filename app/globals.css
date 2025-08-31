@@ -9,7 +9,7 @@
 html {
   scroll-behavior: smooth;
   overflow-x: visible;
-  /* Предотвращаем зум на мобильных устройствах */
+  /* Предотвращаем зум на мобильных устройства�� */
   -webkit-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%;
   text-size-adjust: 100%;
@@ -2572,7 +2572,7 @@ body {
 
 .pricing-badge {
   position: absolute;
-  top: -12px;
+  top: 12px;
   left: 50%;
   transform: translateX(-50%);
   background: linear-gradient(135deg, #0ea5e9, #3b82f6);
@@ -2585,6 +2585,7 @@ body {
   align-items: center;
   gap: 0.5rem;
   box-shadow: 0 4px 20px rgba(14, 165, 233, 0.4);
+  z-index: 2;
 }
 
 .badge-star {
@@ -2595,6 +2596,7 @@ body {
 .pricing-card-header {
   text-align: center;
   margin-bottom: 2rem;
+  padding-top: 1.5rem;
 }
 
 .plan-name {
@@ -2638,7 +2640,11 @@ body {
 }
 
 .plan-price.sale {
+  display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
   gap: 0.25rem;
 }
 
@@ -2647,6 +2653,10 @@ body {
   align-items: baseline;
   justify-content: center;
   color: rgba(255, 255, 255, 0.6);
+}
+
+.plan-price.sale .price-currency {
+  margin-left: 0.25rem;
 }
 
 .original-amount {
@@ -3694,7 +3704,7 @@ body {
     padding: 1rem;
     padding-bottom: 6rem; /* Отступ для фиксированного поля ввода */
     gap: 0.875rem;
-    /* Обеспечиваем правильное заполнение оставшегося пространства */
+    /* Обеспечиваем правильное ��аполнение оставшегося пространства */
     flex: 1;
     min-height: 0;
     /* Всегда прокручиваем к низу при изменении размера */
