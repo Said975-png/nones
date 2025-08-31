@@ -9,7 +9,8 @@ const pricingPlans = [
     id: 'basic',
     name: 'Basic',
     subtitle: 'Стартовое решение',
-    price: '2 500 000',
+    price: '1 500 000',
+    oldPrice: '2 500 000',
     currency: 'сум',
     description: 'Идеально для небольших проектов и стартапов',
     features: [
@@ -20,7 +21,7 @@ const pricingPlans = [
       'Техподдержка email'
     ],
     highlighted: false,
-    badge: null,
+    badge: 'Акция',
     color: 'from-gray-600 to-gray-700'
   },
   {
@@ -130,9 +131,17 @@ export default function Pricing() {
               <div className="pricing-card-header">
                 <h3 className="plan-name">{plan.name}</h3>
                 <p className="plan-subtitle">{plan.subtitle}</p>
-                <div className="plan-price">
-                  <span className="price-amount">{plan.price}</span>
-                  <span className="price-currency">{plan.currency}</span>
+                <div className={`plan-price ${plan.oldPrice ? 'sale' : ''}`}>
+                  {plan.oldPrice && (
+                    <div className="price-original">
+                      <span className="original-amount">{plan.oldPrice}</span>
+                      <span className="price-currency">{plan.currency}</span>
+                    </div>
+                  )}
+                  <div className="price-current">
+                    <span className="price-amount">{plan.price}</span>
+                    <span className="price-currency">{plan.currency}</span>
+                  </div>
                 </div>
                 <p className="plan-description">{plan.description}</p>
               </div>
