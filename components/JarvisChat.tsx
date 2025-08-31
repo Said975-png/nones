@@ -77,7 +77,7 @@ export default function JarvisChat() {
     if (isOpen && inputRef.current) {
       inputRef.current.focus()
 
-      // Автоматически озвучиваем приветствие при открытии чата
+      // Автома��ически озвучиваем приветствие при открытии чата
       if (messages.length === 1) {
         // Небольшая задержка, чтобы чат успел открыться
         setTimeout(() => {
@@ -109,7 +109,7 @@ export default function JarvisChat() {
     if (!isOpen) return
 
     const resizeObserver = new ResizeObserver(() => {
-      // Прокручиваем к последнему сообщению при изменении размера
+      // Прокручиваем к последнему сообщению пр�� изменении размера
       setTimeout(() => {
         scrollToBottom()
       }, 50)
@@ -433,7 +433,22 @@ export default function JarvisChat() {
         currentAudioRef.current = null
       }
 
-      await audio.play()
+      const playPromise = audio.play()
+      if (playPromise !== undefined) {
+        playPromise.catch((err) => {
+          const msg = String(err || '')
+          if (msg.includes('interrupted by a call to pause()') || (err && (err as any).name === 'AbortError')) {
+            // Benign: playback was paused/stopped intentionally
+            return
+          }
+          console.error('Speech play error:', err)
+        })
+        try {
+          await playPromise
+        } catch (_) {
+          // ignored
+        }
+      }
 
     } catch (error) {
       console.error('Speech error:', error)
