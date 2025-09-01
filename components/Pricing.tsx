@@ -74,7 +74,7 @@ export default function Pricing() {
         entries.forEach((entry) => {
           const planId = entry.target.getAttribute('data-plan-id')
           if (entry.isIntersecting && planId) {
-            setVisibleCards(prev => [...new Set([...prev, planId])])
+            setVisibleCards(prev => (prev.includes(planId) ? prev : [...prev, planId]))
           }
         })
       },
@@ -116,7 +116,7 @@ export default function Pricing() {
           {pricingPlans.map((plan, index) => (
             <div
               key={plan.id}
-              ref={(el) => cardRefs.current[index] = el}
+              ref={(el) => { cardRefs.current[index] = el }}
               data-plan-id={plan.id}
               className={`pricing-card ${visibleCards.includes(plan.id) ? 'visible' : ''} ${plan.highlighted ? 'highlighted' : ''}`}
               style={{ animationDelay: `${index * 0.2}s` }}

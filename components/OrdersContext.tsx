@@ -32,7 +32,7 @@ interface OrdersContextType {
   orders: Order[]
   getUserOrders: (userId: string) => Order[]
   getAllOrders: () => Order[]
-  createOrder: (order: Omit<Order, 'id' | 'createdAt' | 'updatedAt'>) => string
+  createOrder: (order: Omit<Order, 'id' | 'createdAt' | 'updatedAt' | 'status'>) => string
   updateOrderStatus: (orderId: string, status: OrderStatus) => void
   getOrder: (orderId: string) => Order | undefined
 }
@@ -88,7 +88,7 @@ export function OrdersProvider({ children }: { children: ReactNode }) {
     return orders
   }
 
-  const createOrder = (orderData: Omit<Order, 'id' | 'createdAt' | 'updatedAt'>): string => {
+  const createOrder = (orderData: Omit<Order, 'id' | 'createdAt' | 'updatedAt' | 'status'>): string => {
     const orderId = `order_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
     const now = new Date().toISOString()
 

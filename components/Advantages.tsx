@@ -19,7 +19,7 @@ const advantages = [
   {
     icon: Target,
     title: "Точное таргетирование",
-    description: "Умная система рекомендаций, которая увеличивает конверсию до 40% благодаря интеллектуальным предложениям товаров.",
+    description: "Умная система рекомендаций, которая увеличивает конверси�� до 40% благодаря интеллектуальным предложениям товаров.",
     color: "from-purple-500 to-pink-500"
   },
   {
@@ -53,7 +53,7 @@ export default function Advantages() {
         entries.forEach((entry) => {
           const index = parseInt(entry.target.getAttribute('data-index') || '0')
           if (entry.isIntersecting) {
-            setVisibleItems(prev => [...new Set([...prev, index])])
+            setVisibleItems(prev => (prev.includes(index) ? prev : [...prev, index]))
           }
         })
       },
@@ -85,7 +85,7 @@ export default function Advantages() {
             return (
               <div
                 key={index}
-                ref={(el) => itemRefs.current[index] = el}
+                ref={(el) => { itemRefs.current[index] = el }}
                 data-index={index}
                 className={`advantage-card ${visibleItems.includes(index) ? 'visible' : ''}`}
                 style={{ animationDelay: `${index * 0.1}s` }}

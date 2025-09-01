@@ -7,7 +7,7 @@ import { useOrders, Order, OrderStatus } from '@/components/OrdersContext'
 const ADMIN_PASSWORD = 'Laky06451'
 
 export default function AdminPage() {
-  const { getAllOrders, updateOrderStatus } = useOrders()
+  const { getAllOrders, updateOrderStatus, createOrder } = useOrders()
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [password, setPassword] = useState('')
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null)
@@ -154,22 +154,13 @@ export default function AdminPage() {
                   customerInfo: {
                     fullName: 'Тестовый Пользователь',
                     phone: '+998901234567',
-                    siteDescription: 'Тестовое описание сайта'
+                    siteDescription: 'Тестовое опис��ние сайта'
                   },
                   status: 'pending' as const
                 }
-                const orderId = updateOrderStatus ? (() => {
-                  const id = `order_${Date.now()}_test`
-                  const now = new Date().toISOString()
-                  const newOrder = {
-                    ...testOrder,
-                    id,
-                    createdAt: now,
-                    updatedAt: now
-                  }
-                  setOrders(prev => [...prev, newOrder])
-                  return id
-                })() : 'test_order'
+                const orderId = createOrder(testOrder)
+                const refreshedOrders = getAllOrders()
+                setOrders(refreshedOrders)
                 console.log('Создан тестовый заказ:', orderId)
               }}
               className="test-button"
@@ -350,7 +341,7 @@ export default function AdminPage() {
                           className="confirm-button"
                         >
                           <CheckCircle className="button-icon" />
-                          Подтвердить заказ
+                          Подтверд��ть заказ
                         </button>
                         <button
                           onClick={() => handleStatusUpdate(selectedOrder.id, 'rejected')}

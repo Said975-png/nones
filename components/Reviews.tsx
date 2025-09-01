@@ -147,7 +147,6 @@ export default function Reviews() {
         <div
           ref={scrollRef}
           className="reviews-scroll-container"
-          style={{ scrollLeft: 0 }}
         >
           <div className="reviews-track">
             {duplicatedReviews.map((review, index) => (

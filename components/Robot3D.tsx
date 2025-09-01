@@ -63,40 +63,19 @@ function RobotModel({ scrollProgress, currentSection = 0 }: { scrollProgress: nu
   const modelUrl = 'https://cdn.builder.io/o/assets%2F593c53d93bc14662856f5a8a16f9b13c%2F88fc216c7a7b4bb0a949e0ad51b7ddfb?alt=media&token=e170c830-eccc-4b42-bd56-2ee3b9a06c8e&apiKey=593c53d93bc14662856f5a8a16f9b13c'
 
   // Load GLTF model with error handling
-  const gltf = useGLTF(modelUrl,
-    (loadedGltf) => {
-      setIsLoaded(true)
-      setModelError(false)
-      setIsRetrying(false)
-    },
-    (progress) => {
-      // Loading progress tracking (optional)
-    },
-    (error) => {
-      setModelError(true)
-      setIsRetrying(false)
-
-      // Retry up to 3 times
-      if (retryCount < 3) {
-        setTimeout(() => {
-          setRetryCount(prev => prev + 1)
-          setIsRetrying(true)
-          setModelError(false)
-        }, 2000)
-      }
-    }
-  )
+  const gltf = useGLTF(modelUrl) as any
 
   // CRITICAL: ALL hooks must be called at the top level before any conditional logic!
   const { actions, mixer } = useAnimations(gltf?.animations || [], groupRef)
 
   // Handle successful model load
   useEffect(() => {
-    if (gltf && gltf.scene && !modelError && !isRetrying) {
+    if (gltf && gltf.scene) {
       setIsLoaded(true)
       setModelError(false)
+      setIsRetrying(false)
     }
-  }, [gltf, modelError, isRetrying])
+  }, [gltf])
 
   // Reset retry counter when model loads successfully
   useEffect(() => {
@@ -143,16 +122,17 @@ function RobotModel({ scrollProgress, currentSection = 0 }: { scrollProgress: nu
   // Make robot model transparent
   useEffect(() => {
     if (gltf?.scene) {
-      gltf.scene.traverse((child) => {
-        if (child.isMesh && child.material) {
-          if (Array.isArray(child.material)) {
-            child.material.forEach((mat) => {
-              mat.transparent = true
-              mat.opacity = 0.3 // More transparent and ethereal
+      gltf.scene.traverse((child: THREE.Object3D) => {
+        const mesh = child as unknown as THREE.Mesh
+        if ((mesh as any).isMesh && mesh.material) {
+          if (Array.isArray(mesh.material)) {
+            (mesh.material as THREE.Material[]).forEach((mat) => {
+              ;(mat as any).transparent = true
+              ;(mat as any).opacity = 0.3
             })
           } else {
-            child.material.transparent = true
-            child.material.opacity = 0.3 // More transparent and ethereal
+            ;(mesh.material as any).transparent = true
+            ;(mesh.material as any).opacity = 0.3
           }
         }
       })
