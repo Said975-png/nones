@@ -98,7 +98,7 @@ export default function JarvisChat() {
 
   // Обработчик потери фокуса
   const handleInputBlur = () => {
-    // Прокрутка к последнему сообщению при потере фокуса
+    // Прокрутка к последнему сообщен��ю при потере фокуса
     setTimeout(() => {
       scrollToBottom()
     }, 100)
@@ -559,7 +559,7 @@ export default function JarvisChat() {
         timestamp: new Date()
       }
 
-      // Добавляем пустое сообщение, которое будем обновлять
+      // До��авляем пустое сообщение, которое будем обновлять
       setMessages(prev => [...prev, jarvisMessage])
       setIsTyping(false)
 
@@ -602,7 +602,7 @@ export default function JarvisChat() {
                       : msg
                   ))
 
-                  // Просто накапливаем весь текст для озвучивания в конце
+                  // Просто накапливаем весь текст дл�� озвучивания в конце
                   fullTextRef.current += content
                 }
               } catch (e) {
@@ -677,6 +677,21 @@ export default function JarvisChat() {
     setIsOpen(!isOpen)
   }
 
+  // Блокируем прокрутку страницы, когда открыт чат
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden'
+      document.documentElement.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = 'unset'
+      document.documentElement.style.overflow = 'unset'
+    }
+    return () => {
+      document.body.style.overflow = 'unset'
+      document.documentElement.style.overflow = 'unset'
+    }
+  }, [isOpen])
+
   return (
     <>
       {/* Кнопка чата в правом нижнем углу */}
@@ -739,15 +754,15 @@ export default function JarvisChat() {
                   <div className="message-content">
                     <div className="message-text">{message.text}</div>
                     <div className="message-time">
-                      {message.timestamp.toLocaleTimeString('ru-RU', { 
-                        hour: '2-digit', 
-                        minute: '2-digit' 
+                      {message.timestamp.toLocaleTimeString('ru-RU', {
+                        hour: '2-digit',
+                        minute: '2-digit'
                       })}
                     </div>
                   </div>
                 </div>
               ))}
-              
+
               {isTyping && (
                 <div className="message message-jarvis">
                   <div className="message-avatar">
