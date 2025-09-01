@@ -113,8 +113,7 @@ export default function OrderForm() {
           phone: formData.phone,
           siteDescription: formData.siteDescription,
           referenceLink: formData.referenceLink
-        },
-        status: 'pending'
+        }
       }
 
       console.log('Создание заказа - данные пользователя:', user)
