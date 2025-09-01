@@ -98,7 +98,7 @@ export default function JarvisChat() {
 
   // Обработчик потери фокуса
   const handleInputBlur = () => {
-    // Прокрутка к последнему сообщен��ю при потере фокуса
+    // Прокрутка к последнему сообщению при потере фокуса
     setTimeout(() => {
       scrollToBottom()
     }, 100)
@@ -559,7 +559,7 @@ export default function JarvisChat() {
         timestamp: new Date()
       }
 
-      // До��авляем пустое сообщение, которое будем обновлять
+      // Добавляем пустое сообщение, которое будем обновлять
       setMessages(prev => [...prev, jarvisMessage])
       setIsTyping(false)
 
@@ -602,7 +602,7 @@ export default function JarvisChat() {
                       : msg
                   ))
 
-                  // Просто накапливаем весь текст дл�� озвучивания в конце
+                  // Просто накапливаем весь текст для озвучивания в конце
                   fullTextRef.current += content
                 }
               } catch (e) {
@@ -724,7 +724,7 @@ export default function JarvisChat() {
                 <div className="chat-header-text">
                   <h3 className="chat-title">Джарвис</h3>
                   <p className={`chat-status ${isSpeaking ? 'speaking' : ''}`}>
-                    ИИ-ассистент • {isSpeaking ? 'Говорит медленно...' : 'Онлайн'}
+                    ИИ-ассистент • Онлайн
                   </p>
                 </div>
               </div>
@@ -799,7 +799,7 @@ export default function JarvisChat() {
                   <button
                     onClick={toggleRecording}
                     className={`chat-mic-button ${isRecording ? 'recording' : ''}`}
-                    aria-label={isRecording ? "Остановить запись" : "Начать голосовую запись"}
+                    aria-label={isRecording ? "Остановить запись" : "Начать голосовую з��пись"}
                   >
                     {isRecording ? <MicOff className="chat-mic-icon" /> : <Mic className="chat-mic-icon" />}
                     {isListening && <div className="mic-pulse"></div>}
