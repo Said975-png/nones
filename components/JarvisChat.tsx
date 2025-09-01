@@ -77,7 +77,7 @@ export default function JarvisChat() {
     if (isOpen && inputRef.current) {
       inputRef.current.focus()
 
-      // Автома��ически озвучиваем приветствие при открытии чата
+      // Автоматически озвучиваем приветствие при открытии чата
       if (messages.length === 1) {
         // Небольшая задержка, чтобы чат успел открыться
         setTimeout(() => {
@@ -109,7 +109,7 @@ export default function JarvisChat() {
     if (!isOpen) return
 
     const resizeObserver = new ResizeObserver(() => {
-      // Прокручиваем к последнему сообщению пр�� изменении размера
+      // Прокручиваем к последнему сообщению про изменении размера
       setTimeout(() => {
         scrollToBottom()
       }, 50)
@@ -214,7 +214,7 @@ export default function JarvisChat() {
             break
           case 'not-allowed':
             console.log('Microphone access denied')
-            alert('Нужно разрешит�� доступ к микрофону в настройках браузера')
+            alert('Нужно разрешить доступ к микрофону в настройках браузера')
             break
           case 'no-speech':
             console.log('No speech detected - continuing to listen')
@@ -262,7 +262,7 @@ export default function JarvisChat() {
                 recognition.start()
               } catch (error) {
                 console.log('Failed to restart recognition:', error)
-                // ��ри ошибке перезапуска останавливаем запись
+                // при ошибке перезапуска останавливаем запись
                 setIsRecording(false)
                 isRecordingRef.current = false
                 setIsListening(false)
