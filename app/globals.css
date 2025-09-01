@@ -3846,7 +3846,10 @@ body {
 }
 
 .reviews-scroll-container {
-  overflow: hidden;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x mandatory;
   mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
   -webkit-mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
 }
@@ -3868,6 +3871,7 @@ body {
   position: relative;
   overflow: hidden;
   pointer-events: none;
+  scroll-snap-align: start;
 }
 
 .review-card::before {
