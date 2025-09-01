@@ -3679,7 +3679,7 @@ body {
   }
 
   .chat-container {
-    /* Обеспечиваем стабильную высоту */
+    /* Обеспечиваем стаб��льную высоту */
     height: 100vh;
     height: 100dvh;
     max-height: 100vh;
@@ -3846,10 +3846,7 @@ body {
 }
 
 .reviews-scroll-container {
-  overflow-x: auto;
-  overflow-y: hidden;
-  -webkit-overflow-scrolling: touch;
-  scroll-snap-type: x mandatory;
+  overflow: hidden;
   mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
   -webkit-mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
 }
@@ -3871,7 +3868,6 @@ body {
   position: relative;
   overflow: hidden;
   pointer-events: none;
-  scroll-snap-align: start;
 }
 
 .review-card::before {
