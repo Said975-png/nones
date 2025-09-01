@@ -77,7 +77,7 @@ export default function JarvisChat() {
     if (isOpen && inputRef.current) {
       inputRef.current.focus()
 
-      // Автома��ически озвучиваем приветствие при открытии чата
+      // Автоматически озвучиваем приветствие при открытии чата
       if (messages.length === 1) {
         // Небольшая задержка, чтобы чат успел открыться
         setTimeout(() => {
@@ -109,7 +109,7 @@ export default function JarvisChat() {
     if (!isOpen) return
 
     const resizeObserver = new ResizeObserver(() => {
-      // Прокручиваем к последнему сообщению пр�� изменении размера
+      // Прокручиваем к последнему сообщению про изменении размера
       setTimeout(() => {
         scrollToBottom()
       }, 50)
@@ -214,7 +214,7 @@ export default function JarvisChat() {
             break
           case 'not-allowed':
             console.log('Microphone access denied')
-            alert('Нужно разрешит�� доступ к микрофону в настройках браузера')
+            alert('Нужно разрешить доступ к микрофону в настройках браузера')
             break
           case 'no-speech':
             console.log('No speech detected - continuing to listen')
@@ -262,7 +262,7 @@ export default function JarvisChat() {
                 recognition.start()
               } catch (error) {
                 console.log('Failed to restart recognition:', error)
-                // ��ри ошибке перезапуска останавливаем запись
+                // при ошибке перезапуска останавливаем запись
                 setIsRecording(false)
                 isRecordingRef.current = false
                 setIsListening(false)
@@ -677,6 +677,21 @@ export default function JarvisChat() {
     setIsOpen(!isOpen)
   }
 
+  // Блокируем прокрутку страницы, когда открыт чат
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden'
+      document.documentElement.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = 'unset'
+      document.documentElement.style.overflow = 'unset'
+    }
+    return () => {
+      document.body.style.overflow = 'unset'
+      document.documentElement.style.overflow = 'unset'
+    }
+  }, [isOpen])
+
   return (
     <>
       {/* Кнопка чата в правом нижнем углу */}
@@ -709,7 +724,7 @@ export default function JarvisChat() {
                 <div className="chat-header-text">
                   <h3 className="chat-title">Джарвис</h3>
                   <p className={`chat-status ${isSpeaking ? 'speaking' : ''}`}>
-                    ИИ-ассистент • {isSpeaking ? 'Говорит медленно...' : 'Онлайн'}
+                    ИИ-ассистент • Онлайн
                   </p>
                 </div>
               </div>
@@ -739,15 +754,15 @@ export default function JarvisChat() {
                   <div className="message-content">
                     <div className="message-text">{message.text}</div>
                     <div className="message-time">
-                      {message.timestamp.toLocaleTimeString('ru-RU', { 
-                        hour: '2-digit', 
-                        minute: '2-digit' 
+                      {message.timestamp.toLocaleTimeString('ru-RU', {
+                        hour: '2-digit',
+                        minute: '2-digit'
                       })}
                     </div>
                   </div>
                 </div>
               ))}
-              
+
               {isTyping && (
                 <div className="message message-jarvis">
                   <div className="message-avatar">
@@ -784,7 +799,7 @@ export default function JarvisChat() {
                   <button
                     onClick={toggleRecording}
                     className={`chat-mic-button ${isRecording ? 'recording' : ''}`}
-                    aria-label={isRecording ? "Остановить запись" : "Начать голосовую запись"}
+                    aria-label={isRecording ? "Остановить запись" : "Начать голосовую з��пись"}
                   >
                     {isRecording ? <MicOff className="chat-mic-icon" /> : <Mic className="chat-mic-icon" />}
                     {isListening && <div className="mic-pulse"></div>}
